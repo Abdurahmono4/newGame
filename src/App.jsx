@@ -12,7 +12,7 @@ const App = () => {
   const [rankings, setRankings] = useState(
     JSON.parse(localStorage.getItem("rankings")) || []
   );
-  const [playerName, setPlayerName] = useState(""); // O'yinchining ismi
+  const [playerName, setPlayerName] = useState("");
 
   const questions = [
     {
@@ -240,7 +240,7 @@ const App = () => {
   }, [isPlaying]);
 
   const handleStartGame = (name) => {
-    setPlayerName(name); // O'yinchining ismini saqlash
+    setPlayerName(name);
     setIsPlaying(true);
     setShowRanking(false);
     setCurrentQuestionIndex(0);
@@ -255,7 +255,7 @@ const App = () => {
     } else {
       setIsPlaying(false);
       setShowRanking(true);
-      saveRanking(score, playerName); // O'yinchining ismi va ballini saqlash
+      saveRanking(score, playerName);
     }
   };
 
@@ -269,15 +269,31 @@ const App = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-200 to-blue-500 text-gray-800">
-      {!isPlaying && !showRanking && <StartScreen onStart={handleStartGame} />}
-      {isPlaying && (
-        <Question
-          question={questions[currentQuestionIndex]}
-          onAnswer={handleAnswer}
-        />
-      )}
-      {showRanking && <Ranking rankings={rankings} />}
+    <div className="min-h-screen flex flex-col justify-between bg-gradient-to-b from-blue-200 to-blue-500 text-gray-800">
+      {/* Asosiy o'yin qismlari */}
+      <div className="flex-grow">
+        {!isPlaying && !showRanking && (
+          <StartScreen onStart={handleStartGame} />
+        )}
+        {isPlaying && (
+          <Question
+            question={questions[currentQuestionIndex]}
+            onAnswer={handleAnswer}
+          />
+        )}
+        {showRanking && <Ranking rankings={rankings} />}
+      </div>
+
+      {/* Footer qismini chiroyli qilish */}
+      <footer className="bg-blue-800 text-white py-4 text-center shadow-inner">
+        <p className="text-sm md:text-base">
+          Created with ❤️ by{" "}
+          <span className="font-bold text-yellow-400">Programmer</span>
+        </p>
+        <p className="text-xs mt-2 text-gray-300">
+          © {new Date().getFullYear()} All Rights Reserved
+        </p>
+      </footer>
     </div>
   );
 };
