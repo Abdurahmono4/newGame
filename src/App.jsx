@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import StartScreen from "./components/StartScreen";
 import Question from "./components/Question";
 import Ranking from "./components/Ranking";
+import Leaderboard from "./components/Leaderboard";
 
 const App = () => {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -13,6 +14,7 @@ const App = () => {
     JSON.parse(localStorage.getItem("rankings")) || []
   );
   const [playerName, setPlayerName] = useState("");
+
   const questions = [
     {
       question: "C++: `int main() { return 0; }` kodining ma'nosi nima?",
@@ -269,29 +271,9 @@ const App = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-b from-blue-200 to-blue-500 text-gray-800">
-      {/* Liderlar ro‘yxati */}
-      <header className="bg-blue-800 text-white py-4 shadow-lg">
-        <div className="container mx-auto px-4">
-          <h1 className="text-lg md:text-2xl font-bold text-center">
-            Leaderboard
-          </h1>
-          <ul className="mt-2 text-sm md:text-base flex justify-center flex-wrap">
-            {rankings.map((rank, index) => (
-              <li
-                key={index}
-                className="mx-2 my-1 p-2 bg-blue-600 rounded-lg shadow-sm"
-              >
-                <p className="font-bold text-yellow-300">
-                  {rank.name} — {rank.score} points
-                </p>
-                <p className="text-xs text-gray-300">{rank.time} seconds</p>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </header>
+      {/* Liderlar Ro‘yxati Ikoni */}
+      <Leaderboard rankings={rankings} />
 
-      {/* Asosiy o‘yinning qismi */}
       <div className="flex-grow">
         {!isPlaying && !showRanking && (
           <StartScreen onStart={handleStartGame} />
@@ -305,10 +287,9 @@ const App = () => {
         {showRanking && <Ranking rankings={rankings} />}
       </div>
 
-      {/* Footer qismi */}
       <footer className="bg-blue-800 text-white py-4 text-center shadow-inner">
         <p className="text-sm md:text-base">
-          Created with Muhammaddiyor💻 by{" "}
+          Created by{" "}
           <span className="font-bold text-yellow-400">Programmer</span>
         </p>
         <p className="text-xs mt-2 text-gray-300">
